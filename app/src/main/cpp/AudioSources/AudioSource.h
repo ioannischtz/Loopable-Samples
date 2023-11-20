@@ -21,6 +21,14 @@ public:
     virtual void setStopMode() = 0;
     virtual void setVolume(float vol) = 0;
     virtual float getVolume() = 0;
+    virtual void setNoiseVolume(float vol) = 0;
+    virtual void toggleNoise(bool enableNoise) = 0;
+    virtual void setStart(int startSample) = 0;
+    virtual void setEnd(int endSample) = 0;
+    virtual void setNoiseStart(int startSample) = 0;
+    virtual void setNoiseEnd(int endSample) = 0;
+    virtual void chooseFilter(FilterType filterType) = 0;
+    virtual void setFilterCutoff(float cutFreq) = 0;
 //    void setPlayingMode() {
 //        mIsPlaying.store(true);
 //    };

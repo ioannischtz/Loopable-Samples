@@ -24,6 +24,11 @@ import android.media.AudioManager
 
 object AudioEngine {
     var mEngineHandle: Long = 0
+    enum class FilterType(filter: Int){
+        NOFILTER(0), LOWPASS(1), HIGHPASS(2)
+    }
+
+
     fun create(context: Context): Boolean {
         if (mEngineHandle == 0L) {
             setDefaultStreamValues(context)
@@ -77,6 +82,23 @@ object AudioEngine {
         if (mEngineHandle != 0L) native_setVolume(mEngineHandle, amplitude)
     }
 
+    fun setNoiseVolume(amplitude: Float){
+        if (mEngineHandle != 0L) native_setNoiseVolume(mEngineHandle, amplitude)
+    }
+
+    fun setStart(startSample: Int){
+        if (mEngineHandle != 0L) native_setStart(mEngineHandle,startSample)
+    }
+    fun setEnd(endSample: Int){
+        if (mEngineHandle != 0L) native_setEnd(mEngineHandle,endSample)
+    }
+    fun setNoiseStart(startSample: Int){
+        if (mEngineHandle != 0L) native_setNoiseStart(mEngineHandle,startSample)
+    }
+    fun setNoiseEnd(endSample: Int){
+        if (mEngineHandle != 0L) native_setNoiseEnd(mEngineHandle,endSample)
+    }
+
     fun setAudioDeviceId(deviceId: Int) {
         if (mEngineHandle != 0L) native_setAudioDeviceId(mEngineHandle, deviceId)
     }
@@ -89,6 +111,17 @@ object AudioEngine {
         if (mEngineHandle != 0L) native_setBufferSizeInBursts(mEngineHandle, bufferSizeInBursts)
     }
 
+    fun toggleNoise(enableNoise: Boolean){
+        if (mEngineHandle != 0L) native_toggleNoise(mEngineHandle,enableNoise)
+    }
+
+    fun chooseFilter(filterType: FilterType){
+        if (mEngineHandle != 0L) native_chooseFilter(mEngineHandle,filterType.ordinal);
+    }
+    fun setFilterCutoff(cutFreq: Float){
+        if (mEngineHandle != 0L) native_setFilterCutoff(mEngineHandle,cutFreq)
+    }
+
     // Native methods
     private external fun native_createEngine(assetManager: AssetManager): Long
     private external fun native_startEngine(engineHandle: Long): Int
@@ -98,6 +131,14 @@ object AudioEngine {
     private external fun native_addLoopableSource(mEngineHandle: Long, filename: String, start: Int, end: Int)
     private external fun native_tap(engineHandle: Long, isDown: Boolean)
     private external fun native_setVolume(engineHandle: Long, volume: Float)
+    private external fun native_setNoiseVolume(engineHandle: Long, volume: Float)
+    private external fun native_setStart(engineHandle: Long, start: Int)
+    private external fun native_setEnd(engineHandle: Long, end: Int)
+    private external fun native_setNoiseStart(engineHandle: Long, start: Int)
+    private external fun native_setNoiseEnd(engineHandle: Long, end: Int)
+    private external fun native_toggleNoise(engineHandle: Long, enableNoise: Boolean)
+    private external fun native_chooseFilter(engineHandle: Long, filterType: Int)
+    private external fun native_setFilterCutoff(engineHandle: Long, cutFreq: Float)
 
     private external fun native_setAudioDeviceId(engineHandle: Long, deviceId: Int)
     private external fun native_setChannelCount(mEngineHandle: Long, channelCount: Int)

@@ -1,5 +1,6 @@
 package com.example.oboelibtest
 
+import android.app.Activity
 import android.content.Context
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
@@ -9,10 +10,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.annotation.RequiresApi
 import kotlin.properties.Delegates
 
@@ -21,6 +20,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnLoopable1: Button
     private lateinit var txtVolume: TextView
     private lateinit var seekBarVol: SeekBar
+    private lateinit var txtLoopStart: EditText
+    private lateinit var txtLoopEnd: EditText
+    private lateinit var chkToggleNoise: CheckBox
+    private lateinit var txtNoiseStart: EditText
+    private lateinit var txtNoiseEnd: EditText
+    private lateinit var txtCutoff: EditText
+    private lateinit var seekBarNoiseVol: SeekBar
+
 
     companion object {
         private const val mChannelCount = 1
@@ -28,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         private const val mFilename = "ooRAW48KHz.raw"
         private const val mStartIndex = 19285
         private const val mEndIndex = 26111
+
         @RequiresApi(Build.VERSION_CODES.M)
         private const val mPlaybackDevice = AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
     }
@@ -42,7 +50,14 @@ class MainActivity : AppCompatActivity() {
 
         btnLoopable1 = findViewById(R.id.btnLoopableSample1)
         txtVolume = findViewById(R.id.txtViewVol)
-        seekBarVol =findViewById(R.id.seekBarVolume)
+        seekBarVol = findViewById(R.id.seekBarVolume)
+        txtLoopStart = findViewById(R.id.editNumLoopStart)
+        txtLoopEnd = findViewById(R.id.LoopEnd)
+        chkToggleNoise = findViewById(R.id.chkEnableNoise)
+        txtNoiseStart = findViewById(R.id.editNumNoiseStart)
+        txtNoiseEnd = findViewById(R.id.editNumNoiseEnd)
+        txtCutoff = findViewById(R.id.editNumCutoffF)
+        seekBarNoiseVol = findViewById(R.id.seekBarNoiseVol)
 
         txtVolume.text = seekBarVol.progress.toString()
 
@@ -58,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         btnLoopable1.setOnTouchListener(View.OnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    Log.i("MainACtivity","TAP DOWN")
+                    Log.i("MainACtivity", "TAP DOWN")
                     AudioEngine.tap(true)
                     return@OnTouchListener true
                 }
@@ -70,49 +85,117 @@ class MainActivity : AppCompatActivity() {
             false
         })
 
+        txtLoopStart.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED || actionId == EditorInfo.IME_ACTION_GO) {
+                AudioEngine.setStart(txtLoopStart.text.toString().toInt())
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+        txtLoopEnd.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED || actionId == EditorInfo.IME_ACTION_GO) {
+                AudioEngine.setEnd(txtLoopEnd.text.toString().toInt())
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+        txtNoiseStart.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED || actionId == EditorInfo.IME_ACTION_GO) {
+                AudioEngine.setNoiseStart(txtNoiseStart.text.toString().toInt())
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+        txtNoiseEnd.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED || actionId == EditorInfo.IME_ACTION_GO) {
+                AudioEngine.setNoiseEnd(txtNoiseEnd.text.toString().toInt())
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+
+        txtCutoff.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED || actionId == EditorInfo.IME_ACTION_GO) {
+                AudioEngine.setFilterCutoff(txtCutoff.text.toString().toFloat())
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+
+        chkToggleNoise.setOnCheckedChangeListener { buttonView, isChecked ->
+            AudioEngine.toggleNoise(isChecked)
+        }
+
         seekBarVol.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 // Display the current progress of SeekBar
                 txtVolume.text = "Volume : $i"
-                AudioEngine.setVolume(i.toFloat()/10)
+                AudioEngine.setVolume(i.toFloat() / 10)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // Do something
-                Toast.makeText(applicationContext,"start tracking",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext,"start tracking",Toast.LENGTH_SHORT).show()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 // Do something
-                Toast.makeText(applicationContext,"stop tracking",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext,"stop tracking",Toast.LENGTH_SHORT).show()
             }
         })
 
-        Log.i("OnCreate","OnCreate called")
+        seekBarNoiseVol.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                // Display the current progress of SeekBar
+                AudioEngine.setNoiseVolume(i.toFloat() / 10)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // Do something
+//                Toast.makeText(applicationContext,"start tracking",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // Do something
+//                Toast.makeText(applicationContext,"stop tracking",Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     override fun onResume() {
         super.onResume()
 
         AudioEngine.create(this)
-        Log.i("OnResume","AudioEngine.create called")
+        Log.i("OnResume", "AudioEngine.create called")
         setupPlaybackDevice()
         setupChannelCount()
         setupBufferSize()
 
         AudioEngine.addLoopableSource(mFilename, mStartIndex, mEndIndex)
-        Log.i("OnResume","AudioEngine.addLoopableSource called")
+        Log.i("OnResume", "AudioEngine.addLoopableSource called")
 
         val result = AudioEngine.start()
-        Log.i("OnResume","AudioEngine.start called")
+        Log.i("OnResume", "AudioEngine.start called")
 
 
 
         if (result != 0) {
             showToast("Error opening stream = $result")
         } else {
-            AudioEngine.setVolume(seekBarVol.progress.toFloat()/10)
+            AudioEngine.setVolume(seekBarVol.progress.toFloat() / 10)
         }
     }
 
@@ -194,4 +277,29 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
     }
+
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.radioNoFilter ->
+                    if (checked) {
+                        AudioEngine.chooseFilter(AudioEngine.FilterType.NOFILTER)
+                    }
+                R.id.radioLowPass ->
+                    if (checked) {
+                        AudioEngine.chooseFilter(AudioEngine.FilterType.LOWPASS)
+                    }
+                R.id.radioHighPass ->
+                    if (checked) {
+                        AudioEngine.chooseFilter(AudioEngine.FilterType.HIGHPASS)
+                    }
+            }
+        }
+
+    }
+
 }

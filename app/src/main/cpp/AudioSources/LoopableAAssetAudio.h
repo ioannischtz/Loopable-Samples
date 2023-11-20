@@ -11,6 +11,9 @@
 #include <memory>
 #include <Constants.h>
 #include "logging_macros.h"
+#include <random>
+#include <cmath>
+#include "Iir.h"
 
 #include "AAssetDataSource.h"
 
@@ -21,19 +24,33 @@ public:
                         int32_t loopStart, int32_t loopEnd) :
             mSampleRate(sampleRate), mChannelCount(channelCount),
             mAAssetSource(source),
-            mStartPosition(loopStart), mEndPosition(loopEnd) { LOGI("LoopableAAssetAudio Constructor"); };
+            mStartPosition(loopStart), mEndPosition(loopEnd)
+            {
+                lpf.setup(mSampleRate,kCutoff_freq_lp);
+                hpf.setup(mSampleRate,kCutoff_freq_hp);
+            };
 
     ~LoopableAAssetAudio() = default;
 
     void renderAudio(float *audioData, int32_t numFrames) override;
 
     void setPlayingMode();
-
     void setStopMode();
 
-    void setVolume(float vol) ;
-
+    void setVolume(float vol);
     float getVolume();
+
+    void setNoiseVolume(float vol);
+
+    void setStart(int startSample);
+    void setEnd(int endSample);
+    void setNoiseStart(int startSample);
+    void setNoiseEnd(int endSample);
+
+    void toggleNoise(bool enableNoise);
+
+    void chooseFilter(FilterType filterType);
+    void setFilterCutoff(float cutFreq);
 
 private:
 
@@ -45,11 +62,25 @@ private:
     int32_t mStartPosition;
     int32_t mEndPosition;
 
+    int32_t mStartPositionNoise;
+    int32_t mEndPositionNoise;
+
     int32_t mReadFrameIndex = 0;
 
     std::atomic<bool> mIsPlaying{false};
     std::atomic<float> mVolume{0};
+    std::atomic<float> mNoiseVolume{0};
     bool mIsLooping{false};
+    bool mEnableNoise{false};
+
+    FilterType mFilterType{NOFILTER};
+    float mCutFreq{100};
+
+    std::default_random_engine generator;
+    std::normal_distribution<float> dist{0.0f,0.1f};
+
+    Iir::Butterworth::LowPass<kOrder> lpf;
+    Iir::Butterworth::HighPass<kOrder> hpf;
 
     static void renderSilence(float*, int32_t);
 };

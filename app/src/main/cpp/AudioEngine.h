@@ -23,6 +23,8 @@ public:
     explicit AudioEngine(AAssetManager&);
     virtual ~AudioEngine() = default;
 
+
+
     /**
      * Open and start a stream.
      * @return error or OK
@@ -62,6 +64,14 @@ public:
     void tap(bool isDown);
     void addAudioSource(const char *filename, int32_t loopStart, int32_t loopEnd);
     void setVolume(float vol);
+    void setNoiseVolume(float vol);
+    void setStart(int startSample);
+    void setEnd(int endSample);
+    void setNoiseStart(int startSample);
+    void setNoiseEnd(int endSample);
+    void toggleNoise(bool enableNoise);
+    void chooseFilter(FilterType filterType);
+    void setFilterCutoff(float cutFreq);
 
 private:
     oboe::Result reopenStream();

@@ -11,6 +11,7 @@ public:
     virtual int32_t getTotalFrames() const = 0;
     virtual int32_t getChannelCount() const  = 0;
     virtual const float* getData() const = 0;
+
 };
 
 

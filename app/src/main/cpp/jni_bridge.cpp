@@ -109,6 +109,94 @@ Java_com_example_oboelibtest_AudioEngine_native_1setVolume(JNIEnv *env, jobject 
 }
 
 JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setNoiseVolume(JNIEnv *env, jobject thiz,
+                                                                jlong engine_handle, jfloat volume) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setNoiseVolume(volume);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setStart(JNIEnv *env, jobject thiz,
+                                                          jlong engine_handle, jint startSample) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setStart(startSample);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setEnd(JNIEnv *env, jobject thiz,
+                                                          jlong engine_handle, jint endSample) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setEnd(endSample);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setNoiseStart(JNIEnv *env, jobject thiz,
+                                                          jlong engine_handle, jint startSample) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setNoiseStart(startSample);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setNoiseEnd(JNIEnv *env, jobject thiz,
+                                                          jlong engine_handle, jint endSample) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setNoiseEnd(endSample);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1toggleNoise(JNIEnv *env, jobject thiz, jlong engine_handle,
+                                                            jboolean enableNoise) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->toggleNoise(enableNoise);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1chooseFilter(JNIEnv *env, jobject thiz, jlong engine_handle,
+                                                            jint filterType) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->chooseFilter(static_cast<FilterType>(filterType));
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_oboelibtest_AudioEngine_native_1setFilterCutoff(JNIEnv *env, jobject thiz,
+                                                                jlong engine_handle, jfloat cutFreq) {
+    AudioEngine *engine = reinterpret_cast<AudioEngine *>(engine_handle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setFilterCutoff(cutFreq);
+}
+
+JNIEXPORT void JNICALL
 Java_com_example_oboelibtest_AudioEngine_native_1setAudioDeviceId(JNIEnv *env, jobject thiz,
                                                                   jlong engine_handle,
                                                                   jint device_id) {

@@ -6,27 +6,104 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/editNumNoiseEnd"
+        android:layout_width="66dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Noise-end sample number"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editNumNoiseStart" />
+
+    <TextView
+        android:id="@+id/txtViewNoiseEnd"
+        android:layout_width="64dp"
+        android:layout_height="17dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Noise-end sample number"
+        android:text="NoiseEnd"
+        app:layout_constraintBottom_toTopOf="@+id/editNumNoiseEnd"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewLoopStart4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="LoopStart  (sample #)"
+        app:layout_constraintBottom_toTopOf="@+id/editNumLoopStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <TextView
+        android:id="@+id/txtViewLoopEnd2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="LoopEnd  (sample #)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <TextView
+        android:id="@+id/txtViewLoopStart3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="LoopStart  (sample #)"
+        app:layout_constraintBottom_toTopOf="@+id/editNumLoopStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <EditText
+        android:id="@+id/LoopEnd"
+        android:layout_width="83dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        android:hint="Loop-end sample number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <TextView
+        android:id="@+id/txtViewLoopEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="LoopEnd  (sample #)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
     <Button
         android:id="@+id/btnLoopableSample1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtViewLoopable" />
 
     <TextView
         android:id="@+id/txtViewLoopable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/loopable_samples"
-        app:layout_constraintBottom_toTopOf="@+id/btnLoopableSample1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/seekBarVolume"
@@ -34,12 +111,11 @@
         android:layout_width="256dp"
         android:layout_height="64dp"
         android:max="10"
-        android:progress="5"
+        android:progress="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtViewVol"
@@ -50,4 +126,172 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Noise"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <EditText
+        android:id="@+id/editNumLoopStart"
+        android:layout_width="92dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Loop-start sample number"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <TextView
+        android:id="@+id/txtViewLoopStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="LoopStart  (sample #)"
+        app:layout_constraintBottom_toTopOf="@+id/editNumLoopStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoopableSample1" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteX="201dp"
+        tools:layout_editor_absoluteY="291dp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNumLoopStart" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/txtViewVol"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarNoiseVol" />
+
+    <CheckBox
+        android:id="@+id/chkEnableNoise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="EnableNoise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewNoise" />
+
+    <EditText
+        android:id="@+id/editNumNoiseStart"
+        android:layout_width="66dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        android:hint="Noise-start sample number"
+        app:layout_constraintStart_toEndOf="@+id/chkEnableNoise"
+        app:layout_constraintTop_toTopOf="@+id/chkEnableNoise" />
+
+    <TextView
+        android:id="@+id/txtViewNoiseStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="NoiseStart"
+        app:layout_constraintBottom_toTopOf="@+id/editNumNoiseStart"
+        app:layout_constraintStart_toEndOf="@+id/chkEnableNoise"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewNoise" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="110dp"
+        android:layout_height="144dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/chkEnableNoise"
+        tools:layout_editor_absoluteX="32dp">
+
+        <RadioButton
+            android:id="@+id/radioNoFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="No Filter" />
+
+        <RadioButton
+            android:id="@+id/radioLowPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Low-Pass" />
+
+        <RadioButton
+            android:id="@+id/radioHighPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="High-Pass" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editNumCutoffF"
+        android:layout_width="99dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Cut-off frequency (Hz)"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Done"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+        app:layout_constraintEnd_toStartOf="@+id/txtViewCutoff" />
+
+    <TextView
+        android:id="@+id/txtViewCutoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="Hz"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/editNumCutoffF"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekBarNoiseVol"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="202dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/editNumCutoffF" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

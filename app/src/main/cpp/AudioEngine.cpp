@@ -118,6 +118,10 @@ void AudioEngine::tap(bool isDown ) {
            : mAudioSource->setStopMode();
 }
 
+void AudioEngine::toggleNoise(bool enableNoise) {
+    mAudioSource->toggleNoise(enableNoise);
+}
+
 void AudioEngine::addAudioSource(const char *filename, int32_t loopStart, int32_t loopEnd){
     std::lock_guard<std::mutex> lock(mLock);
     LOGI("addAudioSource called");
@@ -153,6 +157,31 @@ void AudioEngine::addAudioSource(const char *filename, int32_t loopStart, int32_
 
 void AudioEngine::setVolume(float vol) {
     mAudioSource->setVolume(vol);
+}
+
+void AudioEngine::setNoiseVolume(float vol) {
+    mAudioSource->setNoiseVolume(vol);
+}
+
+void AudioEngine::setStart(int startSample) {
+    mAudioSource->setStart(startSample);
+}
+void AudioEngine::setEnd(int endSample) {
+    mAudioSource->setEnd(endSample);
+}
+void AudioEngine::setNoiseStart(int startSample) {
+    mAudioSource->setNoiseStart(startSample);
+}
+void AudioEngine::setNoiseEnd(int endSample) {
+    mAudioSource->setNoiseStart(endSample);
+}
+
+void AudioEngine::chooseFilter(FilterType filterType) {
+    mAudioSource->chooseFilter(filterType);
+}
+
+void AudioEngine::setFilterCutoff(float cutFreq) {
+    mAudioSource->setFilterCutoff(cutFreq);
 }
 
 //----------------------------AudioEngine private methods ---------------------------------------//

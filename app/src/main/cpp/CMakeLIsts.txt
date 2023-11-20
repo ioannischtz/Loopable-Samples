@@ -21,6 +21,9 @@ set(INTERFACES_DIR Interfaces)
 # Pull in Utilities
 set(UTILITIES_DIR Utilities)
 
+# Pull in iir
+set(IIR_DIR iir)
+
 # Add the Oboe library as a subproject. Since Oboe is an out-of-tree source library we must also
 # specify a binary directory
 add_subdirectory(${OBOE_DIR} ./oboe-bin)
@@ -34,6 +37,8 @@ include_directories(
         ${INTERFACES_DIR}
         ${UTILITIES_DIR}
         ${CMAKE_CURRENT_LIST_DIR}
+        ${IIR_DIR}
+        ${IIR_DIR}/iir
 )
 
 # App specific sources
@@ -44,11 +49,20 @@ set(APP_SOURCES
         ${AUDIOSOURCES_DIR}/LoopableAAssetAudio.cpp
         ${CALLBACKS_DIR}/LatencyTuningCallback.cpp
         ${UTILITIES_DIR}/trace.cpp
+        ${IIR_DIR}/iir/Biquad.cpp
+        ${IIR_DIR}/iir/Butterworth.cpp
+        ${IIR_DIR}/iir/Cascade.cpp
+        ${IIR_DIR}/iir/ChebyshevI.cpp
+        ${IIR_DIR}/iir/ChebyshevII.cpp
+        ${IIR_DIR}/iir/Custom.cpp
+        ${IIR_DIR}/iir/PoleFilter.cpp
+        ${IIR_DIR}/iir/RBJ.cpp
         )
 
 # Build the libaudioengine library
 add_library(audioengine SHARED
         ${APP_SOURCES}
+
         )
 
 # Enable optimization flags: if having problems with source level debugging,
@@ -75,6 +89,8 @@ find_library( # Sets the name of the path variable.
         # Specifies the name of the NDK library that
         # you want CMake to locate.
         log)
+#set(iir_DIR "C:\\Program Files (x86)\\iir\\lib\\cmake\\iir")
+#find_package(iir)
 
 # Specify the libraries which our native library is dependent on, including Oboe
 target_link_libraries(
